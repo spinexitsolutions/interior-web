@@ -1,0 +1,116 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: color-mix(in srgb, var(--inverse-bg) 70%, transparent);
+  backdrop-filter: blur(10px);
+  display: grid;
+  place-items: center;
+  padding: clamp(0px, 3vw, 40px);
+  animation: fade 0.4s ease;
+}
+@keyframes fade {
+  from { opacity: 0; }
+}
+.panel {
+  width: min(1200px, 100%);
+  height: min(780px, 100%);
+  background: var(--bg);
+  color: var(--ink);
+  border-radius: calc(var(--radius) * 2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--line);
+}
+.head h2 {
+  margin-top: 6px;
+}
+.close {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+}
+.body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  min-height: 0;
+}
+.stage {
+  position: relative;
+  background: radial-gradient(70% 60% at 50% 60%, var(--surface), var(--bg));
+}
+.loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.arBtn {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+}
+.side {
+  border-left: 1px solid var(--line);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  overflow: auto;
+}
+.swatches {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  text-align: left;
+}
+.swatch i {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+.swatch[data-active='true'] {
+  border-color: var(--ink);
+}
+.qr {
+  display: grid;
+  gap: 12px;
+}
+.qr img {
+  width: 180px;
+  background: var(--surface);
+  padding: 10px;
+  border-radius: var(--radius);
+}
+@media (max-width: 800px) {
+  .body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+  .side {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    max-height: 40vh;
+  }
+}
