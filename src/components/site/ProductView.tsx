@@ -31,7 +31,7 @@ export default function ProductView({ product: p, currency, showPrice, descripti
         </div>
         {mode === '3d' ? (
           <div className={s.canvas} data-cursor="Drag · Zoom">
-            <OrbitScene model={p.model} modelUrl={p.modelUrl} palette={palette} size={2.1} zoom autoRotate={false} camera={[3, 1.9, 4.4]} />
+            <OrbitScene model={p.model} modelUrl={p.modelUrl} palette={palette} size={2.1} zoom effects autoRotate={false} camera={[3, 1.9, 4.4]} />
             {dims && (
               <div className={s.dims} aria-label="Dimensions">
                 <span className="label">W {p.dimensions.w} cm</span>

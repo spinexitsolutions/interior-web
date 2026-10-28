@@ -23,7 +23,7 @@ export default function LazyCanvas({ children, className, style, ...props }: Can
   return (
     <div ref={ref} className={className} style={{ position: 'relative', width: '100%', height: '100%', ...style }}>
       {mounted && (
-        <Canvas frameloop={visible ? 'always' : 'never'} dpr={[1, 1.75]} shadows gl={{ antialias: true, alpha: true, preserveDrawingBuffer: false }} {...props}>
+        <Canvas frameloop={visible ? 'always' : 'never'} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }} {...props}>
           <Suspense fallback={null}>{children}</Suspense>
         </Canvas>
       )}

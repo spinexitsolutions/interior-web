@@ -191,11 +191,11 @@ export function ShowroomCanvas({ items, selected, onSelect, store, dark }: { ite
   const [originPos, setOriginPos] = useState(new THREE.Vector3(0, 0, 3.5));
   const target = useRef(new THREE.Vector3(0, 0.6, -0.6));
   return (
-    <Canvas shadows dpr={[1, 1.75]} camera={{ position: [3.2, 2.6, 7.2], fov: 42 }} gl={{ antialias: true }}>
+    <Canvas shadows dpr={[1, 1.5]} camera={{ position: [3.2, 2.6, 7.2], fov: 42 }} gl={{ antialias: true }}>
       <color attach="background" args={[dark ? '#0e1012' : '#eef0ec']} />
       <fog attach="fog" args={[dark ? '#0e1012' : '#eef0ec', 14, 26]} />
       <XR store={store}>
-        <StudioLights intensity={1.1} />
+        <StudioLights intensity={1.1} shadows />
         <IfInSessionMode deny={['immersive-ar']}>
           <TeleportTarget onTeleport={(p) => setOriginPos(new THREE.Vector3(p.x, 0, p.z))}>
             <Room dark={dark} />
@@ -207,7 +207,7 @@ export function ShowroomCanvas({ items, selected, onSelect, store, dark }: { ite
           <Locomotion origin={origin} />
         </IfInSessionMode>
         <IfInSessionMode deny={['immersive-vr', 'immersive-ar']}>
-          <Effects ao={0.9} bloom={0.5} />
+          <Effects ao={0.9} bloom={0.4} />
           <OrbitControls makeDefault target={[0, 0.6, -0.6]} minDistance={2} maxDistance={11} maxPolarAngle={Math.PI / 2.1} enableDamping />
           <DesktopRig target={target} />
           <FloorClick onPick={(p) => target.current.set(THREE.MathUtils.clamp(p.x, -4, 4), 0.6, THREE.MathUtils.clamp(p.z, -4, 4))} />

@@ -3,13 +3,11 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import type { ARProduct } from '../site/ARViewer';
-import type { ShowroomItem } from '../three/Showroom';
 import RichTitle from '../site/RichTitle';
 import s from './Interactive.module.css';
 
 const OrbitScene = dynamic(() => import('../three/Scenes').then((m) => m.OrbitScene), { ssr: false });
 const ARViewer = dynamic(() => import('../site/ARViewer'), { ssr: false });
-const ShowroomPreview = dynamic(() => import('../three/Showroom').then((m) => m.ShowroomPreview), { ssr: false });
 
 export function ARPromo({ data, product }: { data: Record<string, any>; product?: ARProduct }) {
   const [open, setOpen] = useState(false);
@@ -48,11 +46,12 @@ export function ARPromo({ data, product }: { data: Record<string, any>; product?
   );
 }
 
-export function VRPromo({ data, items }: { data: Record<string, any>; items: ShowroomItem[] }) {
+export function VRPromo({ data }: { data: Record<string, any> }) {
   return (
     <section className={`tone-${data.tone || 'dark'} ${s.vr}`}>
+      {/* a still image keeps the homepage light; the live 3D room lives on /showroom */}
       <div className={s.vrCanvas} aria-hidden>
-        <ShowroomPreview items={items} />
+        <img src={data.image || '/images/seed/project-1.jpg'} alt="" data-parallax="0.08" />
       </div>
       <div className={`wrap ${s.vrInner}`}>
         <p className="label muted">{data.eyebrow}</p>

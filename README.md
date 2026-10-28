@@ -18,10 +18,11 @@ npm run dev                  # http://localhost:3000
 - Admin panel: `http://localhost:3000/admin`
 - Default login: `admin@forma.studio` / `admin123` (from `.env.local` — **change it**, or change the password in Admin → Account)
 
-Production:
+> `npm run dev` is for editing code only — it compiles every page on first visit and runs unoptimised, so it feels slow. To actually use or demo the site, always run the production build:
 
 ```bash
-npm run build && npm start
+npm run build
+npm start          # http://localhost:3000
 ```
 
 The CMS database is created on first boot at `data/db.json` (seeded with demo content). Uploaded files go to `data/uploads/`. Back up the `data/` folder (or mount it as a volume) — that is the whole site.
@@ -54,6 +55,9 @@ The CMS database is created on first boot at `data/db.json` (seeded with demo co
 - **Media library** — drag & drop uploads (images, `.glb`, `.usdz`, video, PDF).
 - **Inquiries** — read/unread, reply by email, CSV export.
 - **Account & users** — change password, invite editors/admins, reset demo content.
+
+### Performance
+Heavy post-processing (ambient occlusion, tone mapping) only runs on the product page and VR showroom, and only on powerful devices (8+ CPU cores, 8 GB+ RAM, wide screen). Homepage 3D uses PBR materials + cheap contact shadows, a max pixel ratio of 1.5, and each canvas pauses when scrolled off-screen. The VR teaser on the homepage is a still image; the live room loads only on `/showroom`.
 
 ### Using your own 3D models
 Upload a `.glb` on any product (or in a section’s “3D model” field). To make it recolourable by variants/configurator, name its materials `upholstery`, `wood`, `metal`, `stone` or `accent` in Blender before exporting. Keep files under ~10 MB (use Draco/mesh simplification) for fast mobile AR.

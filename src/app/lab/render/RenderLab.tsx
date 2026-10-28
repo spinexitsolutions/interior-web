@@ -80,7 +80,7 @@ export default function RenderLab({ scene }: { scene: string }) {
         <color attach="background" args={[s.bg]} />
         <Cam pos={s.cam} target={s.target} fov={s.fov ?? 35} />
         <Suspense fallback={null}>
-          <StudioLights intensity={s.light ?? 1} warm={s.warm} />
+          <StudioLights intensity={s.light ?? 1} warm={s.warm} shadows />
           {s.sun && (
             <directionalLight position={s.sun} intensity={2.8} color="#ffe2bf" castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0004}>
               <orthographicCamera attach="shadow-camera" args={[-6, 6, 6, -6, 0.1, 30]} />

@@ -128,7 +128,7 @@ export const SECTION_DEFS: SectionDef[] = [
     label: 'VR showroom teaser',
     description: 'Window into the virtual showroom room with an enter button.',
     icon: '◰',
-    fields: [eyebrow, tone, title, { name: 'text', label: 'Text', type: 'textarea' }, { name: 'buttonLabel', label: 'Button label', type: 'text', half: true }],
+    fields: [eyebrow, tone, title, { name: 'text', label: 'Text', type: 'textarea' }, { name: 'image', label: 'Background image', type: 'image' }, { name: 'buttonLabel', label: 'Button label', type: 'text', half: true }],
   },
   {
     type: 'stats',

@@ -28,8 +28,7 @@
   transition: background 0.4s;
 }
 .header[data-scrolled='true'] .bar {
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
-  backdrop-filter: blur(14px) saturate(1.4);
+  background: color-mix(in srgb, var(--bg) 96%, transparent);
   box-shadow: 0 1px 0 var(--line);
 }
 .header[data-open='true'] .bar {

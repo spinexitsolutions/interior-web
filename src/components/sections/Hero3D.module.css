@@ -49,10 +49,6 @@
 .title {
   position: relative;
   z-index: 1;
-  mix-blend-mode: multiply;
-}
-:global(.tone-dark) .title {
-  mix-blend-mode: normal;
 }
 .bottom {
   display: flex;

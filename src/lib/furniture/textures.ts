@@ -3,7 +3,7 @@
 // Browser-only: returns null under Node so the GLB exporter keeps working.
 import * as THREE from 'three';
 
-const SIZE = 512;
+const SIZE = 256;
 const cache = new Map<string, THREE.Texture | null>();
 
 function rand(seed: number) {
@@ -112,22 +112,22 @@ function memo(key: string, make: () => THREE.Texture) {
 let fabricH: Float32Array | null = null;
 const fabricHeight = () =>
   (fabricH ??= (() => {
-    const n = [makeNoise(64, 3), makeNoise(128, 7), makeNoise(256, 11)];
+    const n = [makeNoise(32, 3), makeNoise(64, 7), makeNoise(128, 11)];
     return field((u, v) => {
-      const weave = 0.5 + 0.25 * Math.sin(u * Math.PI * 2 * 96) * Math.sin(v * Math.PI * 2 * 96) + 0.25 * Math.sin((u + v) * Math.PI * 2 * 48);
+      const weave = 0.5 + 0.25 * Math.sin(u * Math.PI * 2 * 40) * Math.sin(v * Math.PI * 2 * 40) + 0.25 * Math.sin((u + v) * Math.PI * 2 * 20);
       const loops = fbm(u, v, n);
       return weave * 0.45 + loops * 0.55;
     });
   })());
-export const fabricNormal = () => memo('fabricN', () => canvasTexture(heightToNormal(fabricHeight(), 3.2), THREE.NoColorSpace, 4));
-export const fabricRough = () => memo('fabricR', () => canvasTexture(gray(fabricHeight(), 0.82, 1), THREE.NoColorSpace, 4));
+export const fabricNormal = () => memo('fabricN', () => canvasTexture(heightToNormal(fabricHeight(), 3.2), THREE.NoColorSpace, 6));
+export const fabricRough = () => memo('fabricR', () => canvasTexture(gray(fabricHeight(), 0.82, 1), THREE.NoColorSpace, 6));
 
 // ------------------------------------------------------------------ wood grain
 let woodH: Float32Array | null = null;
 const woodHeight = () =>
   (woodH ??= (() => {
     const warp = makeNoise(8, 21);
-    const fine = makeNoise(256, 5);
+    const fine = makeNoise(128, 5);
     return field((u, v) => {
       const w = warp(u, v) * 6;
       const rings = 0.5 + 0.5 * Math.sin((u * 18 + w) * Math.PI * 2);
@@ -142,7 +142,7 @@ export const woodNormal = () => memo('woodN', () => canvasTexture(heightToNormal
 let stoneH: Float32Array | null = null;
 const stoneHeight = () =>
   (stoneH ??= (() => {
-    const n = [makeNoise(4, 31), makeNoise(16, 37), makeNoise(64, 41), makeNoise(256, 43)];
+    const n = [makeNoise(4, 31), makeNoise(16, 37), makeNoise(64, 41), makeNoise(128, 43)];
     const pores = makeNoise(128, 47);
     return field((u, v) => {
       const veins = 0.5 + 0.5 * Math.sin((v * 6 + fbm(u, v, n) * 3) * Math.PI * 2);
@@ -157,7 +157,7 @@ export const stoneNormal = () => memo('stoneN', () => canvasTexture(heightToNorm
 let metalH: Float32Array | null = null;
 const metalHeight = () =>
   (metalH ??= (() => {
-    const n = makeNoise(512, 53);
+    const n = makeNoise(256, 53);
     return field((u, v) => n(u * 0.02, v));
   })());
 export const metalRough = () => memo('metalR', () => canvasTexture(gray(metalHeight(), 0.18, 0.38), THREE.NoColorSpace, 2));

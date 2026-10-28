@@ -46,7 +46,7 @@ function render(section: Section, ctx: SectionContext) {
       return <ARPromo data={d} product={p ? productModel(p) : undefined} />;
     }
     case 'vrPromo':
-      return <VRPromo data={d} items={showroomItems(ctx)} />;
+      return <VRPromo data={d} />;
     case 'stats':
       return <Stats data={d} />;
     case 'process':

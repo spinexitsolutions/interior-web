@@ -44,7 +44,6 @@ export function HeroScene({ model, modelUrl, palette, progress, pointer }: { mod
         </Fit>
       </HeroRig>
       <FloorShadow opacity={0.5} />
-      <Effects />
     </LazyCanvas>
   );
 }
@@ -102,7 +101,6 @@ export function ExplodedScene({ model, modelUrl, palette, progress }: { model?: 
         </Exploder>
       </Fit>
       <FloorShadow opacity={0.35} color="#000" />
-      <Effects vignette={false} />
     </LazyCanvas>
   );
 }
@@ -111,15 +109,13 @@ export function ExplodedScene({ model, modelUrl, palette, progress }: { model?: 
 
 function Turntable({ children, auto }: { children: React.ReactNode; auto: boolean }) {
   const g = useRef<THREE.Group>(null);
-  const { invalidate } = useThree();
-  useFrame((s, dt) => {
+  useFrame((_, dt) => {
     if (g.current && auto) g.current.rotation.y += dt * 0.12;
-    invalidate();
   });
   return <group ref={g}>{children}</group>;
 }
 
-export function OrbitScene({ model, modelUrl, palette, autoRotate = true, size = 1.9, zoom = false, camera = [2.8, 1.8, 4.2] as [number, number, number] }: { model?: string; modelUrl?: string; palette: Palette; autoRotate?: boolean; size?: number; zoom?: boolean; camera?: [number, number, number] }) {
+export function OrbitScene({ model, modelUrl, palette, autoRotate = true, size = 1.9, zoom = false, effects = false, camera = [2.8, 1.8, 4.2] as [number, number, number] }: { model?: string; modelUrl?: string; palette: Palette; autoRotate?: boolean; size?: number; zoom?: boolean; effects?: boolean; camera?: [number, number, number] }) {
   const target = useMemo(() => [0, size * 0.32, 0] as [number, number, number], [size]);
   return (
     <LazyCanvas camera={{ position: camera, fov: 30 }}>
@@ -130,7 +126,7 @@ export function OrbitScene({ model, modelUrl, palette, autoRotate = true, size =
         </Fit>
       </Turntable>
       <FloorShadow />
-      <Effects vignette={false} />
+      {effects && <Effects />}
       <OrbitControls makeDefault target={target} enablePan={false} enableZoom={zoom} minDistance={2} maxDistance={8} minPolarAngle={0.3} maxPolarAngle={Math.PI / 2.05} enableDamping />
     </LazyCanvas>
   );
